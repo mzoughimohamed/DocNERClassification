@@ -1,0 +1,29 @@
+{% extends "html/base.html" %}
+{% block title %}Tunisian News Scraping{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+{% block content %}
+    <div class='main-container'>
+    <form class="predict" method="POST" action={% url 'down' %}>
+      {% csrf_token %}
+      <div class="d-grid gap-2">
+        <h2></h2>
+        {% if state%}
+        <div class="alert alert-success" role="alert">
+            {{message}}
+          </div>
+            <input type="hidden" value="{{name}}" name="name"/>
+            <input class="btn btn-primary btn-lg" target="_blank"  style="margin-bottom:1rem;"type="submit" value="Download">
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+            <a href="{% url 'scrap' %}" class="btn btn-dark btn-lg">Go back</a>
+        {% endif %}
+        </div>
+    <form>
+        <hr/>
+{% endblock %}

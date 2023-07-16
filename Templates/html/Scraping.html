@@ -1,0 +1,43 @@
+{% extends "html/base.html" %}
+{% block title %}Tunisian News Scraping{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+{% block content %}
+    <div class='main-container'>
+    <form class="predict" method="POST" action={% url 'download' %}>
+      {% csrf_token %}
+      <div class="alert alert-primary" role="alert">
+        Web Scraping Utility
+      </div>
+      <div id="empty"></div>
+      <div class="form-group">
+        <input type="url" class="form-control" name='site' style="margin-top: 1rem; margin-bottom:1rem;" placeholder="Enter Link">
+      </div>
+      <div class="d-grid gap-2">
+      <input class="btn btn-primary btn-lg" id="btn" style="margin-bottom:1rem;"type="submit" onclick="arrow()" value="Start The Scraping Process">
+      </div>
+      <hr/>
+      <div class="alert alert-secondary" role="alert">
+        We support the following site at the moment:
+      </div>
+        <div class="list-group">
+          <a href="https://www.mosaiquefm.net/ar" target="_blank" class="list-group-item list-group-item-action">
+            Mosaique FM
+          </a>
+          <a href="https://www.babnet.net/" target="_blank" class="list-group-item list-group-item-action">Babnet</a>
+          <a href="https://www.shemsfm.net/amp/ar/" target="_blank" class="list-group-item list-group-item-action">ShemFM</a>
+          <a href="https://www.shemsfm.net/amp/ar/" target="_blank" class="list-group-item list-group-item-action">JawaharaFM</a>
+          <a href="https://www.interieur.gov.tn/ar" target="_blank" class="list-group-item list-group-item-action">Ministry of Interior</a>
+        </div> 
+        <hr/>
+    <form>
+      <script>
+        function arrow (){
+          div=document.getElementById("empty");
+          div.innerHTML='<div class="alert alert-primary" role="alert">Starting the scraping process. Please wait!</div>'
+        }
+      </script>
+{% endblock %}

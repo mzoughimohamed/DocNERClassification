@@ -1,0 +1,71 @@
+{% extends "html/base.html" %}
+{% block title %}Dataset Transformer{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}"/>
+{% endblock %}
+{% block content %}
+<div class="main-container">
+    <form  method="POST" enctype="multipart/form-data" style="width: 100%;" action='{% url "trans" %}'>
+        {% csrf_token %}
+        <div class="alert alert-primary" role="alert">
+            Convert your spaCy-json data set to IOB format!
+          </div>
+        <div id="empty"></div>
+        <input name="file" class="form-control"  required type="file" style="margin: 25px 0;" id="formFile">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" id="btn" onclick="arrow()"class="btn btn-primary" >Transform</button> 
+        </div>
+    </form>
+</div>
+<hr/>
+<div class="centerflex">
+<div class="alert alert-info" role="alert">
+   An example of spaCy json format:  
+</div>
+<div class="alert alert-secondary" style="width: 75%;" role="alert">
+<pre >
+{
+    "classes": [
+        "POLITIQUE",
+        "ECONOMIE",
+        "SANTÉ",
+        "CULTURE ET ART",
+        "MÉDIAS",
+        "SPORT",
+        "SECURITÉ ET DEFENSE",
+        "TECHNOLOGIE",
+        "EDUCATION"
+    ],
+    "annotations": [
+        [
+            "أوضح النق المركزي اليوم الثلاثاء في بلاغ له أنه لاحظ تواصل تسارع التضخم الذي بلغ 7 5 في شهر أفريل 2022 بحساب الانزلاق السنوي بعد تسجيل 7 2 في الشهر السابق و5 في شهر أفريل 2021 أي أعلى مستوى يتم تسجيله منذ موفى سنة 2018 ",
+            {
+                "entities": [
+                    [
+                        36,
+                        40,
+                        "MÉDIAS"
+                    ],
+                    [
+                        59,
+                        71,
+                        "ECONOMIE"
+                    ]
+                ]
+            }
+        ],
+        ...
+    ]
+}    
+    </pre>  
+ </div>
+</div>
+<hr/>
+<script>
+    function arrow (){
+      div=document.getElementById("empty");
+      div.innerHTML='<div class="alert alert-primary" role="alert">Starting converting that data set. Please wait!</div>'
+    }
+  </script>
+{% endblock%}

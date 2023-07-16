@@ -1,0 +1,36 @@
+{% extends "html/base.html" %}
+{% block title %}Homepage{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}"/>
+{% endblock %}
+{% block content %}
+      <div class="main-container">
+      <div class="card-group" style="width:75%;margin-top:5rem;">
+      <div class="card">
+        <img class="card-img-top" src="{% static 'card1.jpg'%}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Collect Data </h5>
+                <p class="card-text">Giving you Chance of targetting many Tunisian arabic News Websites</p>
+                <a href="{% url 'scrap' %}" class="btn btn-primary">Let's Go</a>
+            </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{% static 'bg1.png'%}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Transform your dataset</h5>
+            <p class="card-text">You can reuse and tranform your spaCy json data to IOB format</p>
+            <a href="{% url 'json' %}" class="btn btn-primary">Let's Go</a>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{% static 'card22.png'%}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Classify Documents</h5>
+            <p class="card-text">Using our AI-based spaCy model trained Over Thousand of samples</p>
+            <a href="{% url 'prediction' %}" class="btn btn-primary">Let's Go</a>
+        </div>
+      </div>
+      </div>
+    <div>
+{% endblock %}

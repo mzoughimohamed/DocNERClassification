@@ -1,0 +1,80 @@
+{% extends "html/base.html" %}
+{% block title %}Dataset Transformer{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+{% block content %}
+    <div class='main-container'>
+    <form class="predict" method="POST" action={% url 'tele' %}>
+      {% csrf_token %}
+      <div class="d-grid gap-2">
+        {% if state%}
+        <div class="alert alert-success" role="alert">
+            Succes,{{message}}
+          </div>
+            <input type="hidden" value="{{name}}" name="name"/>
+            <input class="btn btn-primary btn-lg" target="_blank"  style="margin-bottom:1rem;"type="submit" value="Download">
+            <div class="alert alert-info" role="alert">
+                {{mes}}
+              </div>
+            <canvas id="myChart" width="80%" height="50%"></canvas>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+          Converting failed, please recheck your file!
+        </div>
+            <a href="{% url 'json' %}" class="btn btn-primary btn-lg">Go back</a>
+        {% endif %}
+        </div>
+    </div>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels:[ {% for elem in class%}
+                      "{{elem}}",
+                    {% endfor %}],
+                    datasets: [{
+                        label: "Percentage of entity predictions",
+                        data: [ {% for elem in values %}
+                        {{elem}},
+                      {% endfor %}],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 206, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 250)',
+                            'rgb(255, 159, 64)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 206, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 251)',
+                            'rgb(255, 159, 64)'
+                        ],
+                        borderWidth: 0.5
+                    }]
+                },
+                options: {
+                  legend: {
+                      display:true,
+                       labels: {
+                            fontColor: 'rgb(255,255,255)'
+                           }
+                        },
+                  title: {
+                      display: true,
+                      fontColor: '#fff',
+                      text: 'Custom Chart Title'
+                  }
+                  } 
+            });
+        </script>
+{% endblock %}

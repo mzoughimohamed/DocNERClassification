@@ -1,0 +1,120 @@
+{% extends "html/base.html" %}
+{% block title %}Document-Classification{% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+{% block content %}
+    <div class='main-container'>
+    <form class="predict" method="POST" action={% url 'results' %}>
+      {% csrf_token %}
+      <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">Our Document Classifier</h4>
+        <p>This our named entity recognition spaCy model.</p>
+        <hr/>
+        <p class="mb-0">You can type whatever you want to, make sure to use Modern standard arabic</p>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" name="paragraph" id="exampleFormControlTextarea1" rows="7" style="direction: rtl;"></textarea>
+      </div>
+      <div class="d-grid gap-2">
+      <input class="btn btn-primary btn-lg"  type="submit" value="Predict">
+      </div>
+    <form>
+      <hr/>
+    {% if Succes %}
+    <div class="alert alert-success" role="alert">
+      {{message}}
+    </div>
+    <div id="spaCy"></div>
+    <hr/>
+    <div class="mother">
+      <div class="alert alert-primary" role="alert">
+        Graphical representation of percentage per class found:
+      </div>
+    <div class="white">
+    <canvas id="myChart" width="80%" height="50%"></canvas>
+    </div>
+    <hr/>
+    <div class="alert alert-primary" role="alert">Table of class occurance: </div>
+    <hr/>
+    <div class="white table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table" style="color:white;">
+      <thead>
+        <tr>
+          <th scope="col">Class</th>
+          <th scope="col">Occurance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entity in entites %}
+        <tr>
+          <td>{{entity.Class}}</td>
+          <td>{{entity.Percent}}</td>
+        </tr>
+        {%  endfor %}
+      </tbody>
+    </table>
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels:[ {% for elem in labels%}
+                "{{elem}}",
+              {% endfor %}],
+              datasets: [{
+                  label: "Percentage of entity predictions",
+                  data: [ {% for elem in values %}
+                  {{elem}},
+                {% endfor %}],
+                  backgroundColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(54, 162, 235)',
+                      'rgb(255, 206, 86)',
+                      'rgb(75, 192, 192)',
+                      'rgb(153, 102, 250)',
+                      'rgb(255, 159, 64)'
+                  ],
+                  borderColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(54, 162, 235)',
+                      'rgb(255, 206, 86)',
+                      'rgb(75, 192, 192)',
+                      'rgb(153, 102, 251)',
+                      'rgb(255, 159, 64)'
+                  ],
+                  borderWidth: 0.5
+              }]
+          },
+          options: {
+            legend: {
+                display:true,
+                 labels: {
+                      fontColor: 'rgb(255,255,255)'
+                     }
+                  },
+            title: {
+                display: true,
+                fontColor: '#fff',
+                text: 'Custom Chart Title'
+            }
+            } 
+      });
+    div=document.getElementById("spaCy");
+    text="{{html}}";
+    text=text.replace(/&lt;/g,'<');
+    text=text.replace(/&quot;/g,'\'');
+    text=text.replace(/&gt;/g,'>')
+    div.innerHTML=text;
+      </script>
+
+    {% endif%}
+    </div>
+    <hr/>
+    
+{% endblock %}

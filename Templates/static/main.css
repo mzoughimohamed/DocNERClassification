@@ -1,0 +1,74 @@
+body{
+    background-image: url("image3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    min-width: 500px;
+}
+.black{
+    color:white;
+}
+hr{
+    color:white;
+    height: 3px;
+}
+.centerflex{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card{
+    color:black;
+    width:50%;
+    margin-bottom:3rem ;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+.main-container{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.mother{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.white{
+    margin: 0.5rem;
+    width:100%;
+    height:50%;
+}
+h3{
+    margin: 2rem;
+}
+h3>a{
+    background-color: #ffffff;
+}
+form.predict{
+    width:75%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+textarea{
+    margin-top:2rem;
+    margin-bottom: 2rem;
+}
+canvas{
+    background-color: white;
+}
+table,tr,td{
+    color: black;
+    background-color: #fff;
+}
