@@ -26,7 +26,7 @@ def results(request):
         "EDUCATION":"Educational"}
     if request.method=="POST":
         data=request.POST
-        nlp=spacy.load("C:\\Users\\Mzoughi\\Documents\\My Files\\PFE\\showcase\\showcase\\output\\model-best")
+        nlp=spacy.load(".\output\model-best")
         doc=nlp(preprocess(data["paragraph"]))
         Entities=[elem.label_ for elem in doc.ents]
         Counter={elem.label_:0 for elem in doc.ents}
