@@ -117,7 +117,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    "C:\\Users\\Mzoughi\\Documents\\My Files\\PFE\\showcase\\showcase\\Templates\\static"
+    "./Templates/static"
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
